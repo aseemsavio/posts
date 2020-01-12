@@ -27,6 +27,7 @@ public class QuestionsController {
     @ApiOperation(value = "Creates a question")
     public Flux<ResponsioResponseEntity> createQuestion(@RequestBody CreateQuestionRequest question) {
 
+
         Question question1 = new Question();
         question1.setContent("jdskj");
         question1.setCreationTS(null);
