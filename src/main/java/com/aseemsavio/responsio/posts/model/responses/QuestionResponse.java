@@ -29,4 +29,10 @@ public class QuestionResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public QuestionResponse(String id, String content, String message) {
+        this.id = id;
+        this.content = content;
+        this.message = message;
+    }
 }

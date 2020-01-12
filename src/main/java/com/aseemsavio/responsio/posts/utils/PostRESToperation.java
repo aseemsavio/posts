@@ -1,8 +1,9 @@
 package com.aseemsavio.responsio.posts.utils;
 
 public enum PostRESToperation {
-    POST_CREATION,
-    POST_DELETION,
-    POST_SEARCH_BY_ID,
-    POST_SEARCH_MULTIPLE
+    QUESTION_CREATION,
+    QUESTION_DELETION,
+    QUESTION_SEARCH_BY_ID,
+    QUESTION_SEARCH_MULTIPLE,
+    QUESTION_UPDATE
 }

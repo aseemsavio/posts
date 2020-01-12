@@ -1,4 +1,4 @@
-package com.aseemsavio.responsio.posts.model.entities;
+package com.aseemsavio.responsio.posts.model.requests;
 
 public class DeleteQuestionRequest {
 

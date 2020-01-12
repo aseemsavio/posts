@@ -3,15 +3,19 @@ package com.aseemsavio.responsio.posts.controllers;
 import com.aseemsavio.responsio.posts.model.requests.CreateQuestionRequest;
 import com.aseemsavio.responsio.posts.model.responses.QuestionResponse;
 import com.aseemsavio.responsio.posts.model.responses.ResponsioResponseEntity;
-import com.aseemsavio.responsio.posts.model.entities.DeleteQuestionRequest;
+import com.aseemsavio.responsio.posts.model.requests.DeleteQuestionRequest;
 import com.aseemsavio.responsio.posts.model.entities.Question;
 import com.aseemsavio.responsio.posts.model.entities.Questions;
+import com.aseemsavio.responsio.posts.utils.PostRESToperation;
+import com.aseemsavio.responsio.posts.utils.factories.QuestionResponseFactory;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import static com.aseemsavio.responsio.posts.utils.PostRESToperation.QUESTION_CREATION;
+import static com.aseemsavio.responsio.posts.utils.Status.SUCCESS;
 import static reactor.core.publisher.Mono.just;
 
 @RestController
@@ -19,34 +23,22 @@ import static reactor.core.publisher.Mono.just;
 @ApiOperation(value = "Requests related to Questions in Responsio")
 public class QuestionsController {
 
-    @GetMapping(value = "/hi", produces = "application/json")
-    public ResponsioResponseEntity<Mono<String>> hello() {
-
-        Mono<String> stringMono = just("Hello world");
-        ResponsioResponseEntity<Mono<String>> responseEntity = new ResponsioResponseEntity(
-                HttpStatus.OK,
-                "SUCCESS",
-                "STRING",
-                stringMono
-        );
-
-        return responseEntity;
-    }
-
     @PutMapping(value = "/createQuestion", produces = "application/json")
     @ApiOperation(value = "Creates a question")
     public Flux<ResponsioResponseEntity> createQuestion(@RequestBody CreateQuestionRequest question) {
 
-        QuestionResponse questionResponse = new QuestionResponse();
-        questionResponse.setId("jhsakjhdaskjd");
-        questionResponse.setMessage("Question Created successfully");
-        questionResponse.setContent(question.getContent());
+        Question question1 = new Question();
+        question1.setContent("jdskj");
+        question1.setCreationTS(null);
+        question1.setQuestionId("shgj");
+        question1.setUserId("kjdhkj");
+        QuestionResponse response = QuestionResponseFactory.build(question1, QUESTION_CREATION, SUCCESS);
 
         ResponsioResponseEntity<QuestionResponse> responseEntity = new ResponsioResponseEntity(
                 HttpStatus.OK,
                 "SUCCESS",
                 "QuestionResponse",
-                questionResponse
+                response
         );
         return Flux.just(responseEntity);
     }
@@ -54,16 +46,18 @@ public class QuestionsController {
     @DeleteMapping(value = "/deleteQuestion", produces = "application/json")
     @ApiOperation(value = "Deletes a question")
     public Flux<ResponsioResponseEntity> deleteQuestion(@RequestBody DeleteQuestionRequest question) {
-        QuestionResponse questionResponse = new QuestionResponse();
-        questionResponse.setId(question.getQuestionId());
-        questionResponse.setMessage("Question Deleted successfully");
-        questionResponse.setContent("hjkhkjhkjh");
+        Question question1 = new Question();
+        question1.setContent("jdskj");
+        question1.setCreationTS(null);
+        question1.setQuestionId("shgj");
+        question1.setUserId("kjdhkj");
+        QuestionResponse response = QuestionResponseFactory.build(question1, PostRESToperation.QUESTION_DELETION, SUCCESS);
 
         ResponsioResponseEntity<QuestionResponse> responseEntity = new ResponsioResponseEntity(
                 HttpStatus.OK,
                 "SUCCESS",
                 "QuestionResponse",
-                questionResponse
+                response
         );
         return Flux.just(responseEntity);
     }
@@ -82,7 +76,9 @@ public class QuestionsController {
         return Flux.just(responseEntity);
     }
 
-    public Flux<ResponsioResponseEntity> getQuestionForId() {
+    @GetMapping("/getQuestionForId/{questionId}")
+    @ApiOperation(value = "Gets the question belonging to a Question ID")
+    public Flux<ResponsioResponseEntity> getQuestionForId(@PathVariable("questionId") String userId) {
         Question question = new Question();
         ResponsioResponseEntity<QuestionResponse> responseEntity = new ResponsioResponseEntity(
                 HttpStatus.OK,
@@ -91,6 +87,14 @@ public class QuestionsController {
                 question
         );
         return Flux.just(responseEntity);
+    }
+
+    public Flux<ResponsioResponseEntity> updateQuestion() {
+        return null;
+    }
+
+    public Flux<ResponsioResponseEntity> getAllQuestions() {
+        return null;
     }
 
 
