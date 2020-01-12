@@ -1,9 +1,14 @@
 package com.aseemsavio.responsio.posts.model.entities;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDateTime;
 
+@Document(value = "questions")
 public class Question {
 
+    @Id
     private String questionId;
     private String userId;
     private String content;
@@ -39,5 +44,15 @@ public class Question {
 
     public void setCreationTS(LocalDateTime creationTS) {
         this.creationTS = creationTS;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "questionId='" + questionId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", content='" + content + '\'' +
+                ", creationTS=" + creationTS +
+                '}';
     }
 }

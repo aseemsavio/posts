@@ -1,47 +1,40 @@
 package com.aseemsavio.responsio.posts.controllers;
 
+import com.aseemsavio.responsio.posts.exceptions.DuplicateQuestionFoundException;
 import com.aseemsavio.responsio.posts.model.requests.CreateQuestionRequest;
 import com.aseemsavio.responsio.posts.model.responses.QuestionResponse;
 import com.aseemsavio.responsio.posts.model.responses.ResponsioResponseEntity;
 import com.aseemsavio.responsio.posts.model.requests.DeleteQuestionRequest;
 import com.aseemsavio.responsio.posts.model.entities.Question;
-import com.aseemsavio.responsio.posts.model.entities.Questions;
+import com.aseemsavio.responsio.posts.model.responses.Questions;
+import com.aseemsavio.responsio.posts.service.QuestionService;
 import com.aseemsavio.responsio.posts.utils.PostRESToperation;
 import com.aseemsavio.responsio.posts.utils.factories.QuestionResponseFactory;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import static com.aseemsavio.responsio.posts.utils.PostRESToperation.QUESTION_CREATION;
 import static com.aseemsavio.responsio.posts.utils.Status.SUCCESS;
-import static reactor.core.publisher.Mono.just;
 
 @RestController
 @RequestMapping("/v1.0")
 @ApiOperation(value = "Requests related to Questions in Responsio")
 public class QuestionsController {
 
+    @Autowired
+    QuestionService questionService;
+
     @PutMapping(value = "/createQuestion", produces = "application/json")
     @ApiOperation(value = "Creates a question")
-    public Flux<ResponsioResponseEntity> createQuestion(@RequestBody CreateQuestionRequest question) {
-
-
-        Question question1 = new Question();
-        question1.setContent("jdskj");
-        question1.setCreationTS(null);
-        question1.setQuestionId("shgj");
-        question1.setUserId("kjdhkj");
-        QuestionResponse response = QuestionResponseFactory.build(question1, QUESTION_CREATION, SUCCESS);
-
-        ResponsioResponseEntity<QuestionResponse> responseEntity = new ResponsioResponseEntity(
-                HttpStatus.OK,
-                "SUCCESS",
-                "QuestionResponse",
-                response
-        );
-        return Flux.just(responseEntity);
+    public Flux<ResponsioResponseEntity<QuestionResponse>> createQuestion(@RequestBody CreateQuestionRequest createQuestionRequest) throws DuplicateQuestionFoundException {
+        Flux<ResponsioResponseEntity<QuestionResponse>> response = questionService.createQuestion(createQuestionRequest);
+        return response;
     }
 
     @DeleteMapping(value = "/deleteQuestion", produces = "application/json")

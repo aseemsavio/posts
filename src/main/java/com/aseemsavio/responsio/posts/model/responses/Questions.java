@@ -1,4 +1,6 @@
-package com.aseemsavio.responsio.posts.model.entities;
+package com.aseemsavio.responsio.posts.model.responses;
+
+import com.aseemsavio.responsio.posts.model.entities.Question;
 
 import java.util.List;
 

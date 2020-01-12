@@ -1,6 +1,6 @@
 package com.aseemsavio.responsio.posts.utils;
 
 public interface Status {
-    String SUCCESS = "success";
-    String FAILURE = "failed";
+    String SUCCESS = "SUCCESS";
+    String FAILURE = "FAILED";
 }
