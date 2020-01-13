@@ -33,27 +33,13 @@ public class QuestionsController {
     @PutMapping(value = "/createQuestion", produces = "application/json")
     @ApiOperation(value = "Creates a question")
     public Flux<ResponsioResponseEntity<QuestionResponse>> createQuestion(@RequestBody CreateQuestionRequest createQuestionRequest) throws DuplicateQuestionFoundException {
-        Flux<ResponsioResponseEntity<QuestionResponse>> response = questionService.createQuestion(createQuestionRequest);
-        return response;
+        return questionService.createQuestion(createQuestionRequest);
     }
 
     @DeleteMapping(value = "/deleteQuestion", produces = "application/json")
     @ApiOperation(value = "Deletes a question")
-    public Flux<ResponsioResponseEntity> deleteQuestion(@RequestBody DeleteQuestionRequest question) {
-        Question question1 = new Question();
-        question1.setContent("jdskj");
-        question1.setCreationTS(null);
-        question1.setQuestionId("shgj");
-        question1.setUserId("kjdhkj");
-        QuestionResponse response = QuestionResponseFactory.build(question1, PostRESToperation.QUESTION_DELETION, SUCCESS);
-
-        ResponsioResponseEntity<QuestionResponse> responseEntity = new ResponsioResponseEntity(
-                HttpStatus.OK,
-                "SUCCESS",
-                "QuestionResponse",
-                response
-        );
-        return Flux.just(responseEntity);
+    public Flux<ResponsioResponseEntity<QuestionResponse>> deleteQuestion(@RequestBody DeleteQuestionRequest deleteQuestionRequest) {
+        return questionService.deleteQuestion(deleteQuestionRequest);
     }
 
     @GetMapping("/getMyQuestions/{userId}")

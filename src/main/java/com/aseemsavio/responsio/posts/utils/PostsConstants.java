@@ -13,4 +13,6 @@ public interface PostsConstants {
     String QUESTIONS_SEARCH_SUCCESS_MSG = "Questions search successful";
     String QUESTIONS_SEARCH_FAILED_MSG = "Questions could not be found";
     String ERROR = "Could not process your request";
+
+    String NOT_AVAILABLE = "NA";
 }
